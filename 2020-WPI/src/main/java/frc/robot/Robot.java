@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
     pid.init();
     door.init();
     cam.init();
-    drive.init();
     lift.init();
     
   }
