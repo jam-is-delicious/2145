@@ -1,21 +1,21 @@
 package frc.robot.drive; // where to find code
 
-import com.ctre.phoenix.motorcontrol.ControlMode; // import libraries for ControlModes for Talons
-import com.ctre.phoenix.motorcontrol.can.TalonSRX; // import TalonSRX libraries
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.OI.Controller; // import Xbox 360 controller inputs
 import frc.robot.Robot; // import base robot script
 
 public class Drivetrain {
-    private final int[][] motorID = { { 0, 1 }, { 2, 3 } }; // motor ids for the motor controllers
-    public TalonSRX[][] motors = { { null, null }, { null, null } }; // actual motor controllers, not defined yet
+    private final int[][] motorID = { { 1, 2 }, { 3, 4 } }; // motor ids for the motor controllers
+    public CANSparkMax[][] motors = { { null, null }, { null, null } }; // actual motor controllers, not defined yet
     private double wheelSpeed = 0.5; // default driving speed for the robot (set to slowest)
     public int reverseMultiplier;
 
     public Drivetrain() {                                   // creating a new instance of Drivetrain to assign ids to the motor controllers
         for (int a = 0; a < 2; a++) {                       // nested for loop (a "2D" loop, essentially) that assignes a variable to each motor based on position on the robot (a = left & right, b = front & back)
             for (int b = 0; b < 2; b++) {                   // nothing to see here uwu
-                motors[a][b] = new TalonSRX(motorID[a][b]); // sets the ids for each motor depending on its position
+                motors[a][b] = new CANSparkMax(motorID[a][b], MotorType.kBrushless); // sets the ids for each motor depending on its position
             }
         }
         motors[0][1].follow(motors[0][0]); // makes the rear-left motor (the left "slave") follow the front-left motor (the left "master")
@@ -56,7 +56,7 @@ public class Drivetrain {
     }
 
     private void set(double left, double right) {
-        motors[0][0].set(ControlMode.PercentOutput, -left*wheelSpeed); // sets the value for the left master motor
-        motors[1][0].set(ControlMode.PercentOutput, right*wheelSpeed); // sets the value for the right master motor
+        motors[0][0].set(-left*wheelSpeed); // sets the value for the left master motor
+        motors[1][0].set(right*wheelSpeed); // sets the value for the right master motor
     }
 }

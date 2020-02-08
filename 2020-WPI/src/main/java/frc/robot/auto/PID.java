@@ -10,24 +10,24 @@ import frc.robot.Robot;
 public class PID {
     Autonomous auton = Robot.auton;
 
-    final double ticksToFeet = 1.0/4096*(5.28*Math.PI)/12; //converts motor ticks to feet
+    final double ticksToFeet = 1.0/4096*(5.28*Math.PI)/12; // converts encoder ticks to feet
 
     double target = 0; //the distance the bot needs to travel ie. 10 feet
 
-    double errorSum = 0; //the sum of the error
-    double lastTimestamp = 0; //the last second accounted for
-    double lastError = 0; //the distance already travelled 
-    double errorRate = 0; // the amount of distance still needed to go while the bot is going for the integral within PID
+    double error = 0; // how much farther the bot has to travel to reach the target
+    double errorSum = 0; // for the integral term, how much to increase the motor speed until bot overcomes friction
+    double lastTimestamp = 0; // the last cycle accounted for
+    double lastError = 0; // the error in the previous cycle
+    double errorRate = 0; // the rate of speed taken in one cycle
 
-    double encoderPositionLeft = 0; //the value of the left encoder
-    double encoderPositionRight = 0; //the value of the right encoder
+    double encoderPositionLeft = 0; // the value of the left encoder in ticks
+    double encoderPositionRight = 0; //the value of the right encoder in ticks
 
-    final double kP = 0.05; //change this value till it works. its used in calculating the error for the distance needed to travel
-    final double kI = 0.1; //change this value till it works. it makes the errorRate build up over time for the intergral
-    final double kD = 0.01; //change this value till it works. Turns down the errorRate so the effects of the intergral isn't seen until the bot is close to the target distance
+    final double kP = 0.05; // proportional term, multiplied by error to slow down as you approach the target
+    final double kI = 0.1; // integral term, adds speed over time if bot is within 1 foot range of target
+    final double kD = 0.01; // derivitive term, takes rate of speed and decreases it if robot will overtake the target at that speed
 
-    double iLimit = 1; //how close the bot has to be to the target inorder for the intergral to kick in
-    double error = 0; //how much farther the bot has to travel to reach the target
+    double iLimit = 1; // how close the bot has to be to the target in order for the intergral term to have an effect
     double dt = 0; //the time change from the last timestamp for the errorRate
     double outputSpeed = 0; //output speed of the motor
 

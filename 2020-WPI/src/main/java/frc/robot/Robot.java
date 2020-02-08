@@ -7,10 +7,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -33,9 +30,6 @@ public class Robot extends TimedRobot {
   public static Autonomous auton;
   public static PID pid;
 
-  private double startTime;
-  public double autonTime;
-
   @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -56,8 +50,6 @@ public class Robot extends TimedRobot {
     cam.init();
     drive.init();
     lift.init();
-
-    startTime = Timer.getFPGATimestamp();
     
   }
 
@@ -71,8 +63,6 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
-
-    autonTime = Timer.getFPGATimestamp();
   }
 
   @Override
@@ -86,11 +76,6 @@ public class Robot extends TimedRobot {
         pid.run();
         auton.run();
         break;
-    }
-
-    if(autonTime - startTime < 3) {
-      drive.motors[0][0].set(ControlMode.PercentOutput, 0.6);
-      drive.motors[0][1].set(ControlMode.PercentOutput, 0.6);
     }
   }
 
