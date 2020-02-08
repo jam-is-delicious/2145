@@ -7,8 +7,16 @@ import frc.robot.OI.Controller;
 public class Wheel {
 
     TalonSRX motor = new TalonSRX(3);
+    boolean deployed;
 
     public void run() {
+        controlWheel();
+    }
+
+    void controlWheel() {
+        if(deployed = false) {
+            return;
+        }
 
         if(Robot.oi.getAxis(Controller.CoPilot, 2) > 0.1d){
             
@@ -19,7 +27,6 @@ public class Wheel {
             motor.set(ControlMode.PercentOutput, -1d);
 
         }
-
     }
 
 }
