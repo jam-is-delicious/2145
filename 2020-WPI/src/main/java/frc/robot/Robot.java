@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.drive.Drivetrain;
+import frc.robot.auto.*;
+import frc.robot.drive.*;
 import frc.robot.app.*;
 
 public class Robot extends TimedRobot {
@@ -29,7 +30,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
   private Conveyor conv;
   private Lift lift;
-  private Autonomous auton;
+  public static Autonomous auton;
+  public static PID pid;
 
   private double startTime;
   public double autonTime;
@@ -38,7 +40,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putData("Auton Choices", m_chooser);
 
     drive = new Drivetrain();
     Robot.oi = new OI();
@@ -47,16 +49,9 @@ public class Robot extends TimedRobot {
     conv = new Conveyor();
     lift = new Lift();
     auton = new Autonomous();
+    pid = new PID();
 
-    try {
-      door.init();
-      cam.init();
-      drive.init();
-      lift.init();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    
+    pid.init();
     door.init();
     cam.init();
     drive.init();
@@ -88,7 +83,8 @@ public class Robot extends TimedRobot {
         break;
       case kDefaultAuto:
       default:
-        auton.autoLine();
+        pid.run();
+        auton.run();
         break;
     }
 
