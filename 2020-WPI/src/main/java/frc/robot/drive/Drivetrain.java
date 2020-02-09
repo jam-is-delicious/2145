@@ -13,13 +13,14 @@ public class Drivetrain {
     public int reverseMultiplier;
 
     public Drivetrain() {                                   // creating a new instance of Drivetrain to assign ids to the motor controllers
-        for (int a = 1; a < 3; a++) {                       // nested for loop (a "2D" loop, essentially) that assignes a variable to each motor based on position on the robot (a = left & right, b = front & back)
-            for (int b = 1; b < 3; b++) {                   // nothing to see here uwu
+        for (int a = 0; a < 2; a++) {                       // nested for loop (a "2D" loop, essentially) that assignes a variable to each motor based on position on the robot (a = left & right, b = front & back)
+            for (int b = 0; b < 2; b++) {                   // nothing to see here uwu
                 motors[a][b] = new CANSparkMax(motorID[a][b], MotorType.kBrushless); // sets the ids for each motor depending on its position
             }
         }
-        motors[1][2].follow(motors[1][1]); // makes the rear-left motor (the left "slave") follow the front-left motor (the left "master")
-        motors[2][2].follow(motors[2][1]); // same as above for the right side
+
+        motors[0][1].follow(motors[0][0]); // makes the rear-left motor (the left "slave") follow the front-left motor (the left "master")
+        motors[1][1].follow(motors[1][0]); // same as above for the right side
     }
 
     public void run() {                     // called every "frame"
@@ -52,7 +53,7 @@ public class Drivetrain {
     }
 
     private void set(double left, double right) {
-        motors[1][1].set(-left*wheelSpeed); // sets the value for the left master motor
-        motors[2][1].set(right*wheelSpeed); // sets the value for the right master motor
+        motors[0][0].set(-left*wheelSpeed); // sets the value for the left master motor
+        motors[1][0].set(right*wheelSpeed); // sets the value for the right master motor
     }
 }

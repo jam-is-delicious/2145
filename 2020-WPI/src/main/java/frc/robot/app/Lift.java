@@ -1,5 +1,6 @@
 package frc.robot.app;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -8,14 +9,21 @@ import frc.robot.Robot;
 
 public class Lift {
     DoubleSolenoid lift;
+    Compressor comp;
     boolean toggled;
 
     public Lift() {
         lift = new DoubleSolenoid(0, 1);
+        comp = new Compressor();
     }
 
     public void init() {
         lift.set(Value.kReverse);
+        comp.setClosedLoopControl(true);
+    }
+
+    public void stop () {
+        comp.setClosedLoopControl(false);
     }
 
     public void run() {

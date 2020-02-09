@@ -6,7 +6,7 @@ import frc.robot.OI.Controller;
 
 public class Wheel {
 
-    TalonSRX motor = new TalonSRX(3);
+    TalonSRX motor = new TalonSRX(6);
     boolean deployed;
 
     public void run() {
