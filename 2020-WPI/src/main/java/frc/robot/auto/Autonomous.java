@@ -29,9 +29,10 @@ public class Autonomous {
         autoLine();
     }
 
-    void drive(){
+    boolean drive(){
         motors[0][0].set(pid.calculate());
         motors[1][0].set(-pid.calculate());
+        return true;    
     }
 
     void autoLine() {

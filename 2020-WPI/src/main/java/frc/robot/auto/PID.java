@@ -4,17 +4,18 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Robot;
 
-public class PID {
+public class PID extends SubsystemBase {
     Autonomous auton = Robot.auton;
 
     final double ticksToFeet = 1.0/4096*(5.28*Math.PI)/12; // converts encoder ticks to feet
 
-    double target = 0; //the distance the bot needs to travel ie. 10 feet
+    public double target = 0; //the distance the bot needs to travel ie. 10 feet
 
-    double error = 0; // how much farther the bot has to travel to reach the target
+    public double error = 0; // how much farther the bot has to travel to reach the target
     double errorSum = 0; // for the integral term, how much to increase the motor speed until bot overcomes friction
     double lastTimestamp = 0; // the last cycle accounted for
     double lastError = 0; // the error in the previous cycle

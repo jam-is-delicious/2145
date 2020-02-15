@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auto.*;
 import frc.robot.drive.*;
 import frc.robot.app.*;
+import frc.robot.commands.*;
 
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
@@ -72,8 +73,7 @@ public class Robot extends TimedRobot {
         break;
       case kDefaultAuto:
       default:
-        pid.run();
-        auton.run();
+        new AutoLine(drive, pid, 10);
         break;
     }
   }
