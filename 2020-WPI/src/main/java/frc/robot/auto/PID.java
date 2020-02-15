@@ -53,7 +53,7 @@ public class PID extends SubsystemBase {
     }
 
     void P() { //proportional
-        error = target - (encoderPositionLeft + encoderPositionRight) / 2; //sets the error
+        error = target - (encoderPositionLeft + encoderPositionRight) / 2; // sets the error equal to the distance to go minus the distance travelled
     }
 
     void I() { //intergral
