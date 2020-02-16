@@ -1,10 +1,13 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.OI.Controller;
 
-public class Wheel {
+public class Wheel extends SubsystemBase {
 
     TalonSRX motor = new TalonSRX(6);
     boolean deployed;

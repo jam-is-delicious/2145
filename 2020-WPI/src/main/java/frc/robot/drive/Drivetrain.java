@@ -1,6 +1,7 @@
 package frc.robot.drive; // where to find code
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,6 +12,7 @@ import frc.robot.Robot; // import base robot script
 public class Drivetrain extends SubsystemBase {
     private final int[][] motorID = { { 4, 1 }, { 2, 3 } }; // motor ids for the motor controllers
     private CANSparkMax[][] motors = { { null, null }, { null, null } }; // actual motor controllers, not defined yet
+    private CANEncoder[][] encoders = { {null, null}, {null, null} };
     private double wheelSpeed = 0.5; // default driving speed for the robot (set to slowest)
     public int reverseMultiplier;
 
@@ -18,6 +20,7 @@ public class Drivetrain extends SubsystemBase {
         for (int a = 0; a < 2; a++) {                       // nested for loop (a "2D" loop, essentially) that assignes a variable to each motor based on position on the robot (a = left & right, b = front & back)
             for (int b = 0; b < 2; b++) {                   // nothing to see here uwu
                 motors[a][b] = new CANSparkMax(motorID[a][b], MotorType.kBrushless); // sets the ids for each motor depending on its position
+                encoders[a][b] = new CANEncoder(motors[a][b]);
                 System.out.println(motorID[a][b]);
             }
         }
@@ -58,5 +61,13 @@ public class Drivetrain extends SubsystemBase {
     public void set(double lSpeed, double rSpeed) {
         motors[0][0].set(-lSpeed);
         motors[1][0].set(rSpeed);
+    }
+
+    public double getLeftEncoderTicks(){
+        return encoders[0][0].getPosition();
+    }
+
+    public double getRightEncoderTicks() {
+        return encoders[1][0].getPosition();
     }
 }
