@@ -18,7 +18,7 @@ public class Lift {
     }
 
     public void init() {
-        lift.set(Value.kReverse);
+        lift.set(Value.kForward);
         comp.setClosedLoopControl(true);
     }
 
@@ -29,10 +29,10 @@ public class Lift {
     public void run() {
         if(Robot.oi.getButtonDown(Controller.CoPilot, 6)) {
             if(!toggled) {
-                lift.set(Value.kForward);
+                lift.set(Value.kReverse);
                 toggled = true;
             } else if (toggled) {
-                lift.set(Value.kReverse);
+                lift.set(Value.kForward);
                 toggled = false;
             }
         }
