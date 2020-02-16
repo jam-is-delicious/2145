@@ -7,12 +7,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.OI.Controller; // import Xbox 360 controller inputs
 import frc.robot.Robot; // import base robot script
+import frc.robot.auto.*;
 
 public class Drivetrain extends SubsystemBase {
     private final int[][] motorID = { { 4, 1 }, { 2, 3 } }; // motor ids for the motor controllers
     private CANSparkMax[][] motors = { { null, null }, { null, null } }; // actual motor controllers, not defined yet
     private double wheelSpeed = 0.5; // default driving speed for the robot (set to slowest)
     public int reverseMultiplier;
+
+    public PID pid = new PID();
 
     public Drivetrain() {                                   // creating a new instance of Drivetrain to assign ids to the motor controllers
         for (int a = 0; a < 2; a++) {                       // nested for loop (a "2D" loop, essentially) that assignes a variable to each motor based on position on the robot (a = left & right, b = front & back)
@@ -53,7 +56,10 @@ public class Drivetrain extends SubsystemBase {
         double right = (y*reverseMultiplier) + x / 2;
 
         if(Math.abs(x) > 0.1 || Math.abs(y) > 0.1)
-            set(left, right);
+            set(left*wheelSpeed, right*wheelSpeed);
+        else {
+            set(pid.calculate(0), 0d);
+        }
         //set(((x*reverseMultiplier) + Robot.oi.getAxis(Controller.Pilot, 3) - Robot.oi.getAxis(Controller.Pilot, 2))*reverseMultiplier, ((x*reverseMultiplier) - Robot.oi.getAxis(Controller.Pilot, 3) + Robot.oi.getAxis(Controller.Pilot, 2))*reverseMultiplier);
     }
 
