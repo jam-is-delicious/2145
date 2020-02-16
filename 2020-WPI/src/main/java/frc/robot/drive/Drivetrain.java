@@ -51,7 +51,9 @@ public class Drivetrain extends SubsystemBase {
         double y = Robot.oi.getAxis(Controller.Pilot, 1); // same as above for the y-axis
         double left = (y*reverseMultiplier) - x / 2;
         double right = (y*reverseMultiplier) + x / 2;
-        set(left*wheelSpeed, right*wheelSpeed);
+
+        if(Math.abs(x) > 0.1 || Math.abs(y) > 0.1)
+            set(left, right);
         //set(((x*reverseMultiplier) + Robot.oi.getAxis(Controller.Pilot, 3) - Robot.oi.getAxis(Controller.Pilot, 2))*reverseMultiplier, ((x*reverseMultiplier) - Robot.oi.getAxis(Controller.Pilot, 3) + Robot.oi.getAxis(Controller.Pilot, 2))*reverseMultiplier);
     }
 

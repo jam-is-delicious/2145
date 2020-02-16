@@ -8,7 +8,7 @@ import frc.robot.OI.Controller;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Climb {
-    TalonSRX motor = new TalonSRX(8);
+    TalonSRX motor = new TalonSRX(6);
 
     public void run() {
 
