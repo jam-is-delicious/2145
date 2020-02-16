@@ -25,7 +25,7 @@ public class AutoLine extends CommandBase {
     driveSubsystem = dSub;
     pid = pidSub;
     pid.target = target;
-    // Use addRequirements() here to declare subsystem dependencies.
+    
     addRequirements(driveSubsystem);
     addRequirements(pid);
   }
