@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
   public static OI oi;
   private Conveyor conv;
   private Lift lift;
-  public static Autonomous auton;
   public static PID pid;
 
   @Override
@@ -43,7 +42,6 @@ public class Robot extends TimedRobot {
     door = new Door();
     conv = new Conveyor();
     lift = new Lift();
-    auton = new Autonomous();
     pid = new PID();
 
     pid.init();

@@ -17,14 +17,16 @@ public class AutoLine extends CommandBase {
   private final PID pid;
 
   boolean completed;
+
+  double target;
   
   /**
    * Creates a new AutoLine.
    */
-  public AutoLine(Drivetrain dSub, PID pidSub, double target) {
+  public AutoLine(Drivetrain dSub, PID pidSub, double targetPos) {
     driveSubsystem = dSub;
     pid = pidSub;
-    pid.target = target;
+    target = targetPos;
     
     addRequirements(driveSubsystem);
     addRequirements(pid);
@@ -39,11 +41,9 @@ public class AutoLine extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    pid.calculate();
+    driveSubsystem.set(pid.calculate(target), pid.calculate(target));
 
-    driveSubsystem.set(pid.calculate(), pid.calculate());
-
-    if(pid.error < 0.01)
+    if(pid.getError() < 0.01)
       completed = true;
   }
 
