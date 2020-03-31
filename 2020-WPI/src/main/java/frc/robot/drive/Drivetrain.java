@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
 
     public void run() {                     // called every "frame"
         controlSpeed(); // run the speed controls
-        tankDrive();    // run the direction controls
+        arcadeDrive();    // run the direction controls
     }
 
     private void controlSpeed() {
@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
-    private void tankDrive() {
+    private void arcadeDrive() {
         double x = Robot.oi.getAxis(Controller.Pilot, 0); // value for where the joystick is on the x-axis
         double y = Robot.oi.getAxis(Controller.Pilot, 1); // same as above for the y-axis
         double left = (y*reverseMultiplier) - x / 2;
