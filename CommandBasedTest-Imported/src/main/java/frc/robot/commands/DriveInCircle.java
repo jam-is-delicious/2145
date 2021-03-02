@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.Vector;
 import frc.robot.subsystems.Drivetrain;
 
+<<<<<<< Updated upstream
 enum CircleDirection { 
   Clock, CounterClock
 }
@@ -37,6 +38,33 @@ public class DriveInCircle extends CommandBase {
     degreesDriven = 0;
 
     // Use addRequirements() here to declare subsystem dependencies.
+=======
+public class DriveInCircle extends CommandBase {
+
+  Drivetrain drivetrain;
+
+  double degreesToDrive;
+  double degreesDriven;
+  double radius;
+
+  Vector2d lastPosition;
+  Vector2d currentPosition;
+
+  boolean finished = false;
+
+  /** Creates a new DriveInCircle. */
+  public DriveInCircle(Drivetrain _drivetrain, double _degreesToDrive, double _radius) {
+
+    degreesToDrive = _degreesToDrive;
+    radius = _radius;
+    drivetrain = _drivetrain;
+
+    degreesDriven = 0;
+
+    lastPosition = new Vector2d();
+    currentPosition = new Vector2d();
+
+>>>>>>> Stashed changes
     addRequirements(_drivetrain);
   }
 
@@ -44,9 +72,13 @@ public class DriveInCircle extends CommandBase {
   @Override
   public void initialize() 
   {
+<<<<<<< Updated upstream
     originPos = new Vector2d(drivetrain.getDrivetrainPosition(), );
     lastPos = drivetrain.getDrivetrainPosition();
     botPos = new Vector2d(drivetrain.getDrivetrainPosition().x, drivetrain.getDrivetrainPosition().y);
+=======
+
+>>>>>>> Stashed changes
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,6 +87,7 @@ public class DriveInCircle extends CommandBase {
   {
     if(degreesDriven < degreesToDrive) 
     {
+<<<<<<< Updated upstream
       double delta;
       Vector2d movementVector = botPos;
 
@@ -74,6 +107,13 @@ public class DriveInCircle extends CommandBase {
 
       lastPos = botPos;
       botPos = drivetrain.getDrivetrainPosition();
+=======
+      double delta = Math.atan2(currentPosition.y, currentPosition.x) - Math.atan2(lastPosition.y, lastPosition.x);
+      degreesDriven += Math.toDegrees(delta);
+      
+      lastPosition = currentPosition;
+      currentPosition = drivetrain.getPosition();
+>>>>>>> Stashed changes
     }
   }
 
@@ -84,6 +124,10 @@ public class DriveInCircle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+<<<<<<< Updated upstream
     return false;
+=======
+    return finished;
+>>>>>>> Stashed changes
   }
 }

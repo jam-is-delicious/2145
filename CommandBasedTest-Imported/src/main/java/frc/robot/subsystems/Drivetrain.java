@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -17,6 +16,11 @@ public class Drivetrain extends SubsystemBase {
     private CANSparkMax f_left;
     private CANSparkMax r_right;
     private CANSparkMax r_left;
+    
+    private CANCoder left_right_drag_encoder;
+    private CANCoder front_back_drag_encoder;
+
+    Vector2d position;
 
     private CANCoder l_r_drag_encoder;
     private CANCoder f_b_drag_encoder;
@@ -43,6 +47,13 @@ public class Drivetrain extends SubsystemBase {
         r_left.setInverted(true);
         f_right.setInverted(false);
         r_right.setInverted(false);
+
+        position = new Vector2d();
+    }
+
+    @Override
+    public void periodic() {
+        position = new Vector2d(left_right_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR, front_back_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR);
     }
 
     @Override
@@ -77,13 +88,13 @@ public class Drivetrain extends SubsystemBase {
 
     /** 
      * Sets the speed of the drivetrain motors to turn
-     * @param speed Percent value given to the motor controllers. Positive values turn the robot counter-clockwise, negative values turn the robot clockwise.
+     * @param speed Percent value given to the motor controllers. Positive values turn the robot clockwise, negative values turn the robot counter-clockwise.
     */
     public void setTurn(double speed) {
-        f_right.set(speed);
-        f_left.set(-speed);
-        r_right.set(speed);
-        r_left.set(-speed);
+        f_right.set(-speed);
+        f_left.set(speed);
+        r_right.set(-speed);
+        r_left.set(speed);
     }
 
     /**
@@ -98,15 +109,33 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Sets the speed of the motors to move in the direction of the vector
-     * @param x X value of the vector
-     * @param y Y value of the vector
+     * Sets the speed of the motors to move in the direction of a vector
      */
-    public void setWithVector(double x, double y) {
-        f_right.set(-x + y);
-        f_left.set(x + y);
-        r_right.set(x + y);
-        r_left.set(-x + y);
+    public void setWithVector(Vector2d vector) {
+
+        if(vector.magnitude() > 1)
+            vector = new Vector2d(vector.x / vector.magnitude(), vector.y / vector.magnitude());
+
+        f_right.set(-vector.x + vector.y);
+        f_left.set(vector.x + vector.y);
+        r_right.set(vector.x + vector.y);
+        r_left.set(-vector.x + vector.y);
+    }
+
+    /**
+     * Resets encoder relative positions to 0
+     */
+    public void resetPosition() 
+    {
+        position = new Vector2d(0, 0);
+    }
+
+    /**
+     * Gets the relative position in inches of any of the encoders using its device id. Throws an Exception if there is no encoder with the desired device id.
+     */
+    public Vector2d getPosition()
+    {
+        return position;
     }
 
     /**

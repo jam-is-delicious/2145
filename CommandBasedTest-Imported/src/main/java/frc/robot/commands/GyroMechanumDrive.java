@@ -16,7 +16,7 @@ public class GyroMechanumDrive extends CommandBase {
   Drivetrain m_drive;
 
   double kDrive, kStrafe, kTurn;
-  double[] gyroData = new double[3];
+  double gyroYaw;
 
   public GyroMechanumDrive(Drivetrain drive, double leftY, double leftX, double rightX) {
     addRequirements(drive);
@@ -37,13 +37,11 @@ public class GyroMechanumDrive extends CommandBase {
   @Override
   public void execute() {
 
-    gyroData[0] = m_drive.getGyroData()[0];
-    gyroData[1] = m_drive.getGyroData()[1];
-    gyroData[2] = m_drive.getGyroData()[2];
+    gyroYaw = m_drive.getGyroData()[0];
 
     // this takes the gyro values and uses them to manipulate the controller input so the robot stays field-centric
-    double temp = kDrive * Math.cos(gyroData[0]) + kStrafe * Math.sin(gyroData[0]);
-    kStrafe = -kDrive * Math.sin(gyroData[0]) + kStrafe * Math.cos(gyroData[0]);
+    double temp = kDrive * Math.cos(gyroYaw) + kStrafe * Math.sin(gyroYaw);
+    kStrafe = -kDrive * Math.sin(gyroYaw) + kStrafe * Math.cos(gyroYaw);
     kDrive = temp;
 
     // assigns each wheel the values it needs to drive, turn, and strafe correctly

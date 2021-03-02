@@ -14,12 +14,12 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TurnToAngle extends PIDCommand {
   /** Creates a new TurnToAngle. */
-  public TurnToAngle(double targetAngleInDegrees, Drivetrain drivetrainSubsystem) {
+  public TurnToAngle(double targetAngleInDegrees, double currentAngle, Drivetrain drivetrainSubsystem) {
     super(
         // The controller that the command will use
         new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD),
         // This should return the measurement
-        () -> drivetrainSubsystem.getGyroData()[0],
+        () -> drivetrainSubsystem.getGyroData()[0] - currentAngle,
         // This should return the setpoint (can also be a constant)
         () -> targetAngleInDegrees,
         // This uses the output
