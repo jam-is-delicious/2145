@@ -16,11 +16,6 @@ public class Drivetrain extends SubsystemBase {
     private CANSparkMax f_left;
     private CANSparkMax r_right;
     private CANSparkMax r_left;
-    
-    private CANCoder left_right_drag_encoder;
-    private CANCoder front_back_drag_encoder;
-
-    Vector2d position;
 
     private CANCoder l_r_drag_encoder;
     private CANCoder f_b_drag_encoder;
@@ -53,12 +48,7 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        position = new Vector2d(left_right_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR, front_back_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR);
-    }
-
-    @Override
-    public void periodic() {
-        position = new Vector2d(l_r_drag_encoder.getPosition(), f_b_drag_encoder.getPosition());
+        position = new Vector2d(l_r_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR, f_b_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR);
     }
 
     /**
