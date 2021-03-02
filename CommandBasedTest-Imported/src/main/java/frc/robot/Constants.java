@@ -36,12 +36,11 @@ public final class Constants {
         public static final int F_LEFT_DEVICE_ID = 1;
         public static final int R_RIGHT_DEVICE_ID = 2;
         public static final int R_LEFT_DEVICE_ID = 3;
-        public static final int PIGEON_DEVICE_ID = 4;
-    }
 
-    public static final class TurretConstants {
-        public static final int TURRET_DEVICE_ID = 5;
-		public static final double ENCODER_CONVERSION_FACTOR = 0.087890625;
+        public static final int PIGEON_DEVICE_ID = 4;
+
+        public static final int L_R_ENCODER_DEVICE_ID = 5;
+        public static final int F_B_ENCODER_DEVICE_ID = 6;
     }
 
     public static final class OIConstants {

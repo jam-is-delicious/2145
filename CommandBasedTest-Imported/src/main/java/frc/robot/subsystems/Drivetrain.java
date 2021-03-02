@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 import com.revrobotics.CANSparkMax;
@@ -16,7 +18,12 @@ public class Drivetrain extends SubsystemBase {
     private CANSparkMax r_right;
     private CANSparkMax r_left;
 
-    private PigeonIMU gyro = new PigeonIMU(DriveConstants.PIGEON_DEVICE_ID);
+    private CANCoder l_r_drag_encoder;
+    private CANCoder f_b_drag_encoder;
+
+    private PigeonIMU gyro;
+
+    private Vector2d position;
 
     public Drivetrain() {
 
@@ -25,10 +32,22 @@ public class Drivetrain extends SubsystemBase {
         r_right = new CANSparkMax(DriveConstants.R_RIGHT_DEVICE_ID, MotorType.kBrushless);
         r_left = new CANSparkMax(DriveConstants.R_LEFT_DEVICE_ID, MotorType.kBrushless);
 
+        l_r_drag_encoder = new CANCoder(DriveConstants.L_R_ENCODER_DEVICE_ID);
+        f_b_drag_encoder = new CANCoder(DriveConstants.F_B_ENCODER_DEVICE_ID);
+
+        gyro = new PigeonIMU(DriveConstants.PIGEON_DEVICE_ID);
+
+        position = new Vector2d();
+
         f_left.setInverted(true);
         r_left.setInverted(true);
         f_right.setInverted(false);
         r_right.setInverted(false);
+    }
+
+    @Override
+    public void periodic() {
+        position = new Vector2d(l_r_drag_encoder.getPosition(), f_b_drag_encoder.getPosition());
     }
 
     /**
@@ -88,6 +107,13 @@ public class Drivetrain extends SubsystemBase {
         f_left.set(x + y);
         r_right.set(x + y);
         r_left.set(-x + y);
+    }
+
+    /**
+     * @return Returns the relative position of the robot in the form of a 2-dimensional vector
+     */
+    public Vector2d getDrivetrainPosition() {
+        return position;
     }
 
     /**
