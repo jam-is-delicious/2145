@@ -25,10 +25,10 @@ public class Drivetrain extends SubsystemBase {
 
     private Vector2d position;
     private Vector2d lastPosition;
+    private Vector2d relativePosition;
 
     public Drivetrain() 
     {
-
         f_right = new CANSparkMax(DriveConstants.F_RIGHT_DEVICE_ID, MotorType.kBrushless);
         f_left = new CANSparkMax(DriveConstants.F_LEFT_DEVICE_ID, MotorType.kBrushless);
         r_right = new CANSparkMax(DriveConstants.R_RIGHT_DEVICE_ID, MotorType.kBrushless);
@@ -127,14 +127,15 @@ public class Drivetrain extends SubsystemBase {
     {
         lastPosition = position;
         position = new Vector2d(l_r_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES, f_b_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES);
+        relativePosition = new Vector2d(relativePosition.x + getDrivetrainPositionDelta().x, relativePosition.y + getDrivetrainPositionDelta().y);
     }
 
     /**
      * Resets encoder positions to 0
      */
-    public void resetPositionVector() 
+    public void resetRelativePosition() 
     {
-        position = new Vector2d(0, 0);
+        relativePosition = new Vector2d(0, 0);
     }
 
     /**
@@ -151,6 +152,10 @@ public class Drivetrain extends SubsystemBase {
     public Vector2d getDrivetrainPositionDelta() 
     {
         return new Vector2d(position.x - lastPosition.x, position.y - lastPosition.y);
+    }
+
+    public Vector2d getDrivetrainRelativePosition() {
+        return relativePosition;
     }
 
     /**

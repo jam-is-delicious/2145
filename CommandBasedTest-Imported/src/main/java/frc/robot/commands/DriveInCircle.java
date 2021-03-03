@@ -43,7 +43,7 @@ public class DriveInCircle extends CommandBase {
   @Override
   public void initialize() 
   {
-    botPos = new Vector2d(Math.cos(startingAngle) * radius, Math.sin(startingAngle) * radius);
+    botPos = new Vector2d(Math.cos(Math.toRadians(startingAngle)) * radius, Math.sin(Math.toRadians(startingAngle)) * radius);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
