@@ -39,17 +39,13 @@ public final class Constants {
 
         public static final int PIGEON_DEVICE_ID = 4;
 
-<<<<<<< Updated upstream
         public static final int L_R_ENCODER_DEVICE_ID = 5;
         public static final int F_B_ENCODER_DEVICE_ID = 6;
-=======
-        public static final int F_RIGHT_ENCODER_DEVICE_ID = 5;
-        public static final int F_LEFT_ENCODER_DEVICE_ID = 6;
-        public static final int R_RIGHT_ENCODER_DEVICE_ID = 7;
-        public static final int R_LEFT_ENCODER_DEVICE_ID = 8;
+    }
 
-        public static final double ENCODER_CONVERSION_FACTOR = 0.0436332312999;
->>>>>>> Stashed changes
+    public static final class MathConstants {
+        public static final double ENCODER_PULSES_TO_INCHES = 0.0436332312999;
+        public static final double ENCODER_PULSES_TO_FEET = ENCODER_PULSES_TO_INCHES / 12;
     }
 
     public static final class OIConstants {

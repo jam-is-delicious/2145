@@ -29,12 +29,13 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  private void configureButtonBindings() {
-
+  private void configureButtonBindings() 
+  {
     oi.aButton.and(oi.xButton).whenActive(new DriveSequence(drive, 1, 2, 3, 0.5));
   }
 
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() 
+  {
     return new DriveForSeconds(drive, 2, 0.25);
   }
 }

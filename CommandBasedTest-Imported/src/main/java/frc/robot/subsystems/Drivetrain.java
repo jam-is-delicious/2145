@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.MathConstants;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -23,8 +24,10 @@ public class Drivetrain extends SubsystemBase {
     private PigeonIMU gyro;
 
     private Vector2d position;
+    private Vector2d lastPosition;
 
-    public Drivetrain() {
+    public Drivetrain() 
+    {
 
         f_right = new CANSparkMax(DriveConstants.F_RIGHT_DEVICE_ID, MotorType.kBrushless);
         f_left = new CANSparkMax(DriveConstants.F_LEFT_DEVICE_ID, MotorType.kBrushless);
@@ -47,8 +50,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-        position = new Vector2d(l_r_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR, f_b_drag_encoder.getPosition() * DriveConstants.ENCODER_CONVERSION_FACTOR);
+    public void periodic() 
+    {
+        updatePositionVector();
     }
 
     /**
@@ -58,7 +62,8 @@ public class Drivetrain extends SubsystemBase {
      * @param rrSpeed Percent value sent to the rear-right motor
      * @param rlSpeed Percent value sent to the rear-left motor
      */
-    public void setAllCartesian(double frSpeed, double flSpeed, double rrSpeed, double rlSpeed) {
+    public void setAllCartesian(double frSpeed, double flSpeed, double rrSpeed, double rlSpeed) 
+    {
         f_right.set(frSpeed);
         f_left.set(flSpeed);
         r_right.set(rrSpeed);
@@ -69,7 +74,8 @@ public class Drivetrain extends SubsystemBase {
      * Sets the speed of all drivetrain motors simultaneously
      * @param speed Percent value given to the motor controllers.
      */
-    public void setAll(double speed) {
+    public void setAll(double speed) 
+    {
         f_right.set(speed);
         f_left.set(speed);
         r_right.set(speed);
@@ -80,7 +86,8 @@ public class Drivetrain extends SubsystemBase {
      * Sets the speed of the drivetrain motors to turn
      * @param speed Percent value given to the motor controllers. Positive values turn the robot clockwise, negative values turn the robot counter-clockwise.
     */
-    public void setTurn(double speed) {
+    public void setTurn(double speed) 
+    {
         f_right.set(-speed);
         f_left.set(speed);
         r_right.set(-speed);
@@ -91,7 +98,8 @@ public class Drivetrain extends SubsystemBase {
      * Sets the speed of the drivetrain motors to strafe
      * @param speed Percent value given to the motor controllers. 
      */
-    public void setStrafe(double speed) {
+    public void setStrafe(double speed) 
+    {
         f_left.set(speed);
         r_right.set(speed);
         f_right.set(-speed);
@@ -101,8 +109,8 @@ public class Drivetrain extends SubsystemBase {
     /**
      * Sets the speed of the motors to move in the direction of a vector
      */
-    public void setWithVector(Vector2d vector) {
-
+    public void setWithVector(Vector2d vector) 
+    {
         if(vector.magnitude() > 1)
             vector = new Vector2d(vector.x / vector.magnitude(), vector.y / vector.magnitude());
 
@@ -113,32 +121,43 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
-     * Resets encoder relative positions to 0
+     * Updates the robot's position vector relative to its starting point. Converts encoder pulses to inches.
      */
-    public void resetPosition() 
+    void updatePositionVector()
+    {
+        lastPosition = position;
+        position = new Vector2d(l_r_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES, f_b_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES);
+    }
+
+    /**
+     * Resets encoder positions to 0
+     */
+    public void resetPositionVector() 
     {
         position = new Vector2d(0, 0);
     }
 
     /**
-     * Gets the relative position in inches of any of the encoders using its device id. Throws an Exception if there is no encoder with the desired device id.
+     * @return Returns the position of the robot, in inches, in the form of a 2-dimensional vector
      */
-    public Vector2d getPosition()
+    public Vector2d getDrivetrainPosition() 
     {
         return position;
     }
 
     /**
-     * @return Returns the relative position of the robot in the form of a 2-dimensional vector
+     * @return Returns the change in position of the robot from the last scheduler run
      */
-    public Vector2d getDrivetrainPosition() {
-        return position;
+    public Vector2d getDrivetrainPositionDelta() 
+    {
+        return new Vector2d(position.x - lastPosition.x, position.y - lastPosition.y);
     }
 
     /**
      * @return Returns data from the gyro in an array with a length of 3; [0] = Yaw/Y-axis, [1] = Pitch/X-axis, [2] = Roll/Z-axis
      */
-    public double[] getGyroData() {
+    public double[] getGyroData() 
+    {
         double[] temp = {0, 0, 0};
         gyro.getYawPitchRoll(temp);
         return temp;

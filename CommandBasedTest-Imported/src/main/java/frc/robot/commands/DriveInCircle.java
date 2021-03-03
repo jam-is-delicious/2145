@@ -6,14 +6,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpiutil.math.Vector;
 import frc.robot.subsystems.Drivetrain;
 
-enum CircleDirection { 
-  Clock, CounterClock
-}
-
 public class DriveInCircle extends CommandBase {
+
+  public enum CircleDirection { 
+    Clock, CounterClock
+  }
+
   boolean finished = false;
 
   double degreesToDrive;
@@ -21,7 +21,6 @@ public class DriveInCircle extends CommandBase {
   double radius;
   double startingAngle;
   
-  Vector2d originPos;
   Vector2d botPos;
   Vector2d lastPos;
 
@@ -35,8 +34,8 @@ public class DriveInCircle extends CommandBase {
     radius = _radius;
     direction = _direction;
     startingAngle = _startingAngle;
-
     degreesDriven = 0;
+
     addRequirements(_drivetrain);
   }
 
@@ -44,9 +43,7 @@ public class DriveInCircle extends CommandBase {
   @Override
   public void initialize() 
   {
-    originPos = new Vector2d(drivetrain.getDrivetrainPosition(), );
-    lastPos = drivetrain.getDrivetrainPosition();
-    botPos = new Vector2d(drivetrain.getDrivetrainPosition().x, drivetrain.getDrivetrainPosition().y);
+    botPos = new Vector2d(Math.cos(startingAngle) * radius, Math.sin(startingAngle) * radius);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,11 +52,11 @@ public class DriveInCircle extends CommandBase {
   {
     if(degreesDriven < degreesToDrive) 
     {
-      double delta;
-      Vector2d movementVector = botPos;
+      Vector2d movementVector;
 
-      delta = Math.atan2(botPos.y, botPos.x) - Math.atan2(lastPos.y, lastPos.x);
-      degreesDriven += Math.toDegrees(delta);
+      lastPos = botPos;
+      botPos = new Vector2d(botPos.x + drivetrain.getDrivetrainPositionDelta().x, botPos.y + drivetrain.getDrivetrainPositionDelta().y);
+      movementVector = botPos;
 
       switch(direction) {
         case Clock:
@@ -71,9 +68,10 @@ public class DriveInCircle extends CommandBase {
       }
 
       drivetrain.setWithVector(movementVector);
-
-      lastPos = botPos;
-      botPos = drivetrain.getDrivetrainPosition();
+    } 
+    else 
+    {
+      finished = true;
     }
   }
 
