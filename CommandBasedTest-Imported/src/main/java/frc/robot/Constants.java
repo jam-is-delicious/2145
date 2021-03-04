@@ -52,13 +52,15 @@ public final class Constants {
         public static final double ENCODER_PULSES_TO_FEET = ENCODER_PULSES_TO_INCHES / 12;
         public static final double INCHES_TO_FEET = 1/12;
         public static final double FEET_TO_INCHES = 12;
+        public static final double RAD_TO_DEG = 180 / Math.PI;
+        public static final double DEG_TO_RAD = Math.PI / 180;
 
         public static final double VectorToAngle(Vector2d vec) {
             return Math.atan2(vec.y, vec.x);
         }
 
         public static final Vector2d AngleToVector(double angDeg) {
-            return new Vector2d(Math.cos(Math.toRadians(angDeg)), Math.sin(Math.toRadians(angDeg)));
+            return new Vector2d(Math.cos(angDeg * DEG_TO_RAD), Math.sin(angDeg * DEG_TO_RAD));
         }
     }
 

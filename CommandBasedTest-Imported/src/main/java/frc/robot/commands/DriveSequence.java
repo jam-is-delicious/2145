@@ -21,6 +21,12 @@ public class DriveSequence extends SequentialCommandGroup {
   public DriveSequence(Drivetrain drive, double speed) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveForSeconds(drive, 1, speed), new Wait(2), new DriveForSeconds(drive, 3, speed), new DriveInCircle(drive, speed, 0, 360, 10, CircleDirection.CounterClock));
+    super(new DriveAndTurn(drive, speed, 0, 180, 3, drive.getGyroData()[0]),
+
+    new DriveInCircle(drive, speed, 0, 3, 5, CircleDirection.CounterClock),
+
+    new DriveInCircle(drive, speed, 180, 360, 5, CircleDirection.Clock),
+
+    new DriveAndTurn(drive, speed, 180, 0, 3, drive.getGyroData()[0]));
   }
 }

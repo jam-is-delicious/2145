@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.MathConstants;
 import frc.robot.subsystems.Drivetrain;
 
 public class DriveInCircle extends CommandBase {
@@ -45,7 +46,7 @@ public class DriveInCircle extends CommandBase {
   @Override
   public void initialize() 
   {
-    botPos = new Vector2d(Math.cos(Math.toRadians(startingAngle)) * radius, Math.sin(Math.toRadians(startingAngle)) * radius);
+    botPos = new Vector2d(Math.cos(startingAngle * MathConstants.DEG_TO_RAD) * radius, Math.sin(startingAngle * MathConstants.DEG_TO_RAD) * radius);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
