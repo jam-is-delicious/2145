@@ -16,6 +16,7 @@ public class DriveInCircle extends CommandBase {
 
   boolean finished = false;
 
+  double speed;
   double degreesToDrive;
   double degreesDriven;
   double radius;
@@ -29,7 +30,8 @@ public class DriveInCircle extends CommandBase {
   Drivetrain drivetrain;
 
   /** Creates a new DriveInCircle. */
-  public DriveInCircle(Drivetrain _drivetrain, double _startingAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
+  public DriveInCircle(Drivetrain _drivetrain, double _speed, double _startingAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
+    speed = _speed;
     degreesToDrive = _degreesToDrive;
     radius = _radius;
     direction = _direction;
@@ -56,6 +58,7 @@ public class DriveInCircle extends CommandBase {
 
       lastPos = botPos;
       botPos = new Vector2d(botPos.x + drivetrain.getDrivetrainPositionDelta().x, botPos.y + drivetrain.getDrivetrainPositionDelta().y);
+      degreesDriven += Math.toDegrees(Math.atan2(botPos.y, botPos.x) - Math.atan2(lastPos.y, lastPos.x));
       movementVector = botPos;
 
       switch(direction) {

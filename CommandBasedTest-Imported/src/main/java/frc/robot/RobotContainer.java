@@ -31,7 +31,7 @@ public class RobotContainer {
 
   private void configureButtonBindings() 
   {
-    oi.aButton.and(oi.xButton).whenActive(new DriveSequence(drive, 1, 2, 3, 0.5));
+    oi.aButton.and(oi.xButton).whenActive(new DriveSequence(drive, 0.25));
   }
 
   public Command getAutonomousCommand() 
