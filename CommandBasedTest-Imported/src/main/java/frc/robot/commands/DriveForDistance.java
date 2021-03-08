@@ -12,11 +12,11 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveForDistance extends ParallelCommandGroup {
   /** Creates a new DriveForDistance. */
-  public DriveForDistance(Drivetrain drive, double speed, double angle, double distance, double gyroYaw) {
+  public DriveForDistance(Drivetrain drive, double speed, double angle, double distance) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
     drive.resetRelativePosition();
-    addCommands(new DriveForDistancePID(drive, speed, angle, distance, gyroYaw));
+    addCommands(new DriveForDistancePID(drive, speed, angle, distance));
   }
 }

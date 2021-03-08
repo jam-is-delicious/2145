@@ -8,22 +8,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.OI;
+import frc.robot.subsystems.OI.Controller;
 
 public class GyroMechanumDrive extends CommandBase {
 
   Drivetrain m_drive;
+  OI m_oi;
 
   double kDrive, kStrafe, kTurn;
   double gyroYaw;
 
-  public GyroMechanumDrive(Drivetrain drive, double leftY, double leftX, double rightX) {
+  public GyroMechanumDrive(Drivetrain drive, OI oi) {
     addRequirements(drive);
-
-    kDrive = leftY;
-    kStrafe = leftX;
-    kTurn = rightX;
 
     m_drive = drive;
   }
@@ -37,7 +36,11 @@ public class GyroMechanumDrive extends CommandBase {
   @Override
   public void execute() {
 
-    gyroYaw = m_drive.getGyroData()[0];
+    gyroYaw = m_drive.getGyroAngle();
+
+    kDrive = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y);
+    kStrafe = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_X);
+    kTurn = m_oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X);
 
     // this takes the gyro values and uses them to manipulate the controller input so the robot stays field-centric
     double temp = kDrive * Math.cos(gyroYaw) + kStrafe * Math.sin(gyroYaw);

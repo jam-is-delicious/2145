@@ -16,7 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveForDistancePID extends PIDCommand {
   /** Creates a new DriveForDistance. */
-  public DriveForDistancePID(Drivetrain drive, double speed, double angle, double distance, double gyroYaw) {
+  public DriveForDistancePID(Drivetrain drive, double speed, double angle, double distance) {
     super(
         // The controller that the command will use
         new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD),
@@ -27,7 +27,7 @@ public class DriveForDistancePID extends PIDCommand {
         // This uses the output
         output -> {
             Vector2d movementVector = MathConstants.AngleToVector(angle);
-            movementVector.rotate(gyroYaw);
+            movementVector.rotate(-drive.getGyroAngle());
             drive.setWithVector(movementVector);
         });
     // Use addRequirements() here to declare subsystem dependencies.

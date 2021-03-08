@@ -26,22 +26,13 @@ public final class Constants {
         public static final double kI = 0.02;
         public static final double kD = 0.005;
         public static final double kFF = 0.1;
-
-        public static final double kTurretP = 0.4;
-        public static final double kTurretI = 0.02;
-        public static final double kTurretD = 0.005;
-        public static final double kTurretFF = 0.1;
-
-		public static final double TURRET_SETPOINT = 0.1;
     }
 
     public static final class DriveConstants {
-        public static final int F_RIGHT_DEVICE_ID = 0;
-        public static final int F_LEFT_DEVICE_ID = 1;
-        public static final int R_RIGHT_DEVICE_ID = 2;
-        public static final int R_LEFT_DEVICE_ID = 3;
-
-        public static final int PIGEON_DEVICE_ID = 4;
+        public static final int F_RIGHT_DEVICE_ID = 1;
+        public static final int F_LEFT_DEVICE_ID = 2;
+        public static final int R_RIGHT_DEVICE_ID = 3;
+        public static final int R_LEFT_DEVICE_ID = 4;
 
         public static final int L_R_ENCODER_DEVICE_ID = 5;
         public static final int F_B_ENCODER_DEVICE_ID = 6;
@@ -75,7 +66,7 @@ public final class Constants {
 
         public static final int L_STICK_Y = 1;
         public static final int L_STICK_X = 0;
-        public static final int R_STICK_X = 2;
+        public static final int R_STICK_X = 4;
     }
 
 }

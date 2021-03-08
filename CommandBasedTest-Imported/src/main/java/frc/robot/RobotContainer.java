@@ -8,8 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.OIConstants;
-import frc.robot.OI.Controller;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -24,7 +22,7 @@ public class RobotContainer {
     drive = new Drivetrain();
     oi = new OI();
 
-    drive.setDefaultCommand(new GyroMechanumDrive(drive, oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y), oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_X), oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X)));
+    drive.setDefaultCommand(new GyroMechanumDrive(drive, oi));
 
     configureButtonBindings();
   }
