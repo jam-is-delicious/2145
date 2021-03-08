@@ -28,14 +28,17 @@ public final class Constants {
         public static final double kFF = 0.1;
     }
 
-    public static final class DriveConstants {
+    public static final class CanBusConstants {
         public static final int F_RIGHT_DEVICE_ID = 1;
         public static final int F_LEFT_DEVICE_ID = 2;
         public static final int R_RIGHT_DEVICE_ID = 3;
         public static final int R_LEFT_DEVICE_ID = 4;
 
-        public static final int L_R_ENCODER_DEVICE_ID = 5;
-        public static final int F_B_ENCODER_DEVICE_ID = 6;
+        public static final int FLYWHEEL_MOTOR_DEVICE_ID = 5;
+        public static final int CONVEYOR_MOTOR_DEVICE_ID = 6;
+
+        public static final int L_R_ENCODER_DEVICE_ID = 8;
+        public static final int F_B_ENCODER_DEVICE_ID = 9;
     }
 
     public static final class MathConstants {
