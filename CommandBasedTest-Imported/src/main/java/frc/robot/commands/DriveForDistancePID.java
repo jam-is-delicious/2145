@@ -21,14 +21,14 @@ public class DriveForDistancePID extends PIDCommand {
         // The controller that the command will use
         new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD),
         // This should return the measurement
-        () -> drive.getDrivetrainRelativePosition().magnitude() * MathConstants.INCHES_TO_FEET,
+        () -> drive.getDrivetrainRelativePosition().magnitude(),
         // This should return the setpoint (can also be a constant)
-        () -> distance * MathConstants.INCHES_TO_FEET,
+        () -> distance,
         // This uses the output
         output -> {
             Vector2d movementVector = MathConstants.AngleToVector(angle);
             movementVector.rotate(-drive.getGyroAngle());
-            drive.setWithVector(movementVector);
+            drive.setWithVector(new Vector2d(movementVector.x * output, movementVector.y * output));
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

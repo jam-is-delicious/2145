@@ -43,9 +43,9 @@ public class GyroMechanumDrive extends CommandBase {
     kTurn = m_oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X);
 
     // this takes the gyro values and uses them to manipulate the controller input so the robot stays field-centric
-    double temp = kDrive * Math.cos(gyroYaw) + kStrafe * Math.sin(gyroYaw);
+    /*double temp = kDrive * Math.cos(gyroYaw) + kStrafe * Math.sin(gyroYaw);
     kStrafe = -kDrive * Math.sin(gyroYaw) + kStrafe * Math.cos(gyroYaw);
-    kDrive = temp;
+    kDrive = temp;*/
 
     // assigns each wheel the values it needs to drive, turn, and strafe correctly
     double fr = kDrive - kTurn - kStrafe;
