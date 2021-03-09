@@ -2,9 +2,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 
 import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,10 +19,10 @@ public class Drivetrain extends SubsystemBase {
     private CANSparkMax r_right;
     private CANSparkMax r_left;
 
-    private CANCoder l_r_drag_encoder;
-    private CANCoder f_b_drag_encoder;
+    //private CANCoder l_r_drag_encoder;
+    //private CANCoder f_b_drag_encoder;
 
-    private PigeonIMU gyro;
+    private ADXRS450_Gyro gyro;
 
     private Vector2d position;
     private Vector2d lastPosition;
@@ -34,12 +35,14 @@ public class Drivetrain extends SubsystemBase {
         r_right = new CANSparkMax(DriveConstants.R_RIGHT_DEVICE_ID, MotorType.kBrushless);
         r_left = new CANSparkMax(DriveConstants.R_LEFT_DEVICE_ID, MotorType.kBrushless);
 
-        l_r_drag_encoder = new CANCoder(DriveConstants.L_R_ENCODER_DEVICE_ID);
-        f_b_drag_encoder = new CANCoder(DriveConstants.F_B_ENCODER_DEVICE_ID);
+        //l_r_drag_encoder = new CANCoder(DriveConstants.L_R_ENCODER_DEVICE_ID);
+        //f_b_drag_encoder = new CANCoder(DriveConstants.F_B_ENCODER_DEVICE_ID);
 
-        gyro = new PigeonIMU(DriveConstants.PIGEON_DEVICE_ID);
+        gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+        gyro.calibrate();
 
         position = new Vector2d();
+        relativePosition = new Vector2d();
 
         f_left.setInverted(true);
         r_left.setInverted(true);
@@ -126,8 +129,8 @@ public class Drivetrain extends SubsystemBase {
     void updatePositionVector()
     {
         lastPosition = position;
-        position = new Vector2d(l_r_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES, f_b_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES);
-        relativePosition = new Vector2d(relativePosition.x + getDrivetrainPositionDelta().x, relativePosition.y + getDrivetrainPositionDelta().y);
+        //position = new Vector2d(l_r_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES, f_b_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES);
+        //relativePosition = new Vector2d(relativePosition.x + getDrivetrainPositionDelta().x, relativePosition.y + getDrivetrainPositionDelta().y);
     }
 
     /**
@@ -161,10 +164,8 @@ public class Drivetrain extends SubsystemBase {
     /**
      * @return Returns data from the gyro in an array with a length of 3; [0] = Yaw/Y-axis, [1] = Pitch/X-axis, [2] = Roll/Z-axis
      */
-    public double[] getGyroData() 
+    public double getGyroAngle() 
     {
-        double[] temp = {0, 0, 0};
-        gyro.getYawPitchRoll(temp);
-        return temp;
+        return gyro.getAngle();
     }
 }

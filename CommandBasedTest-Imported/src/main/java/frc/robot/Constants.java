@@ -36,13 +36,11 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-        public static final int F_RIGHT_DEVICE_ID = 0;
-        public static final int F_LEFT_DEVICE_ID = 1;
-        public static final int R_RIGHT_DEVICE_ID = 2;
-        public static final int R_LEFT_DEVICE_ID = 3;
-
-        public static final int PIGEON_DEVICE_ID = 4;
-
+        public static final int F_RIGHT_DEVICE_ID = 1;
+        public static final int F_LEFT_DEVICE_ID = 2;
+        public static final int R_RIGHT_DEVICE_ID = 3;
+        public static final int R_LEFT_DEVICE_ID = 4;
+        
         public static final int L_R_ENCODER_DEVICE_ID = 5;
         public static final int F_B_ENCODER_DEVICE_ID = 6;
     }
@@ -75,7 +73,7 @@ public final class Constants {
 
         public static final int L_STICK_Y = 1;
         public static final int L_STICK_X = 0;
-        public static final int R_STICK_X = 2;
+        public static final int R_STICK_X = 4;
     }
 
 }

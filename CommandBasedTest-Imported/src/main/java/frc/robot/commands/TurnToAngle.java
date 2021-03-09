@@ -19,7 +19,7 @@ public class TurnToAngle extends PIDCommand {
         // The controller that the command will use
         new PIDController(PIDConstants.kP, PIDConstants.kI, PIDConstants.kD),
         // This should return the measurement
-        () -> drivetrainSubsystem.getGyroData()[0] % 360,
+        () -> drivetrainSubsystem.getGyroAngle() % 360,
         // This should return the setpoint (can also be a constant)
         () -> targetAngleInDegrees,
         // This uses the output
