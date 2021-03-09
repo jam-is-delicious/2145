@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -43,12 +42,10 @@ public class Drivetrain extends SubsystemBase {
         //l_r_drag_encoder = new CANCoder(DriveConstants.L_R_ENCODER_DEVICE_ID);
         //f_b_drag_encoder = new CANCoder(DriveConstants.F_B_ENCODER_DEVICE_ID);
 
-        gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+        gyro = new ADXRS450_Gyro();
 
         position = new Vector2d();
         relativePosition = new Vector2d();
-
-        position = new Vector2d();
     }
 
     @Override
@@ -156,7 +153,8 @@ public class Drivetrain extends SubsystemBase {
         return new Vector2d(position.x - lastPosition.x, position.y - lastPosition.y);
     }
 
-    public Vector2d getDrivetrainRelativePosition() {
+    public Vector2d getDrivetrainRelativePosition() 
+    {
         return relativePosition;
     }
 

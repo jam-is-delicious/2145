@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.MathConstants;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveInCircle extends CommandBase {
+public class StrafeInCircle extends CommandBase {
 
   public enum CircleDirection { 
     Clock, CounterClock
@@ -31,7 +31,7 @@ public class DriveInCircle extends CommandBase {
   Drivetrain drive;
 
   /** Creates a new DriveInCircle. */
-  public DriveInCircle(Drivetrain _drive, double _speed, double _approachAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
+  public StrafeInCircle(Drivetrain _drive, double _speed, double _approachAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
     drive = _drive;
     speed = _speed;
     degreesToDrive = _degreesToDrive;

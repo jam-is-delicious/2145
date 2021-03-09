@@ -9,19 +9,20 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CanBusConstants;
+import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax shooterMotor;
   CANSparkMax conveyorMotor;
 
   /** Creates a new Shooter. */
-  public Shooter() {
+  public Shooter(OI oi) {
     shooterMotor = new CANSparkMax(CanBusConstants.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushless);
     conveyorMotor = new CANSparkMax(CanBusConstants.CONVEYOR_MOTOR_DEVICE_ID, MotorType.kBrushless);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public void Shoot(float speed) {
+    shooterMotor.set(speed);
+    conveyorMotor.set(speed * ShooterConstants.SHOOTER_TO_CONVEYOR_SPEED);
   }
 }

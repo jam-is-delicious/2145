@@ -38,7 +38,7 @@ public class GyroMechanumDrive extends CommandBase {
 
     gyroYaw = m_drive.getGyroAngle();
 
-    kDrive = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y);
+    kDrive = -m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y);
     kStrafe = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_X);
     kTurn = m_oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X);
 

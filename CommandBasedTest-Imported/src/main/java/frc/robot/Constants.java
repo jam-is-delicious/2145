@@ -23,8 +23,8 @@ public final class Constants {
 
     public static final class PIDConstants {
         public static final double kP = 0.4;
-        public static final double kI = 0.02;
-        public static final double kD = 0.005;
+        public static final double kI = 0.05;
+        public static final double kD = 0.01;
         public static final double kFF = 0.1;
     }
 
@@ -39,6 +39,10 @@ public final class Constants {
 
         public static final int L_R_ENCODER_DEVICE_ID = 8;
         public static final int F_B_ENCODER_DEVICE_ID = 9;
+    }
+
+    public static final class ShooterConstants {
+        public static final double SHOOTER_TO_CONVEYOR_SPEED = 0.25;
     }
 
     public static final class MathConstants {

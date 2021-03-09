@@ -27,7 +27,7 @@ public class DriveForDistancePID extends PIDCommand {
         // This uses the output
         output -> {
             Vector2d movementVector = MathConstants.AngleToVector(angle);
-            movementVector.rotate(-drive.getGyroAngle());
+            movementVector.rotate(drive.getGyroAngle());
             drive.setWithVector(new Vector2d(movementVector.x * output, movementVector.y * output));
         });
     // Use addRequirements() here to declare subsystem dependencies.
