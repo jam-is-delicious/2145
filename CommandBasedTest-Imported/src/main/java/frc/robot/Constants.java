@@ -23,26 +23,26 @@ public final class Constants {
 
     public static final class PIDConstants {
         public static final double kP = 0.4;
-        public static final double kI = 0.02;
-        public static final double kD = 0.005;
+        public static final double kI = 0.05;
+        public static final double kD = 0.01;
         public static final double kFF = 0.1;
-
-        public static final double kTurretP = 0.4;
-        public static final double kTurretI = 0.02;
-        public static final double kTurretD = 0.005;
-        public static final double kTurretFF = 0.1;
-
-		public static final double TURRET_SETPOINT = 0.1;
     }
 
-    public static final class DriveConstants {
+    public static final class CanBusConstants {
         public static final int F_RIGHT_DEVICE_ID = 1;
         public static final int F_LEFT_DEVICE_ID = 2;
         public static final int R_RIGHT_DEVICE_ID = 3;
         public static final int R_LEFT_DEVICE_ID = 4;
-        
-        public static final int L_R_ENCODER_DEVICE_ID = 5;
-        public static final int F_B_ENCODER_DEVICE_ID = 6;
+
+        public static final int FLYWHEEL_MOTOR_DEVICE_ID = 5;
+        public static final int CONVEYOR_MOTOR_DEVICE_ID = 6;
+
+        public static final int L_R_ENCODER_DEVICE_ID = 8;
+        public static final int F_B_ENCODER_DEVICE_ID = 9;
+    }
+
+    public static final class ShooterConstants {
+        public static final double SHOOTER_TO_CONVEYOR_SPEED = 0.25;
     }
 
     public static final class MathConstants {

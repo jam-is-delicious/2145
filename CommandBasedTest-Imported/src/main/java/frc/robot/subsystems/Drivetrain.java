@@ -1,15 +1,14 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.CanBusConstants;
 import frc.robot.Constants.MathConstants;
 
 public class Drivetrain extends SubsystemBase {
@@ -30,26 +29,23 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() 
     {
-        f_right = new CANSparkMax(DriveConstants.F_RIGHT_DEVICE_ID, MotorType.kBrushless);
-        f_left = new CANSparkMax(DriveConstants.F_LEFT_DEVICE_ID, MotorType.kBrushless);
-        r_right = new CANSparkMax(DriveConstants.R_RIGHT_DEVICE_ID, MotorType.kBrushless);
-        r_left = new CANSparkMax(DriveConstants.R_LEFT_DEVICE_ID, MotorType.kBrushless);
+        f_right = new CANSparkMax(CanBusConstants.F_RIGHT_DEVICE_ID, MotorType.kBrushless);
+        f_left = new CANSparkMax(CanBusConstants.F_LEFT_DEVICE_ID, MotorType.kBrushless);
+        r_right = new CANSparkMax(CanBusConstants.R_RIGHT_DEVICE_ID, MotorType.kBrushless);
+        r_left = new CANSparkMax(CanBusConstants.R_LEFT_DEVICE_ID, MotorType.kBrushless);
+        
+        f_left.setInverted(false);
+        r_left.setInverted(false);
+        f_right.setInverted(true);
+        r_right.setInverted(true);
 
         //l_r_drag_encoder = new CANCoder(DriveConstants.L_R_ENCODER_DEVICE_ID);
         //f_b_drag_encoder = new CANCoder(DriveConstants.F_B_ENCODER_DEVICE_ID);
 
-        gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-        gyro.calibrate();
+        gyro = new ADXRS450_Gyro();
 
         position = new Vector2d();
         relativePosition = new Vector2d();
-
-        f_left.setInverted(true);
-        r_left.setInverted(true);
-        f_right.setInverted(false);
-        r_right.setInverted(false);
-
-        position = new Vector2d();
     }
 
     @Override
@@ -130,7 +126,7 @@ public class Drivetrain extends SubsystemBase {
     {
         lastPosition = position;
         //position = new Vector2d(l_r_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES, f_b_drag_encoder.getPosition() * MathConstants.ENCODER_PULSES_TO_INCHES);
-        //relativePosition = new Vector2d(relativePosition.x + getDrivetrainPositionDelta().x, relativePosition.y + getDrivetrainPositionDelta().y);
+        relativePosition = new Vector2d(relativePosition.x + getDrivetrainPositionDelta().x, relativePosition.y + getDrivetrainPositionDelta().y);
     }
 
     /**
@@ -157,7 +153,8 @@ public class Drivetrain extends SubsystemBase {
         return new Vector2d(position.x - lastPosition.x, position.y - lastPosition.y);
     }
 
-    public Vector2d getDrivetrainRelativePosition() {
+    public Vector2d getDrivetrainRelativePosition() 
+    {
         return relativePosition;
     }
 

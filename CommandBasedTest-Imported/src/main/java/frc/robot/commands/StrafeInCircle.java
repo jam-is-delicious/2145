@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.MathConstants;
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveInCircle extends CommandBase {
+public class StrafeInCircle extends CommandBase {
 
   public enum CircleDirection { 
     Clock, CounterClock
@@ -21,32 +21,33 @@ public class DriveInCircle extends CommandBase {
   double degreesToDrive;
   double degreesDriven;
   double radius;
-  double startingAngle;
+  double approachAngle;
   
   Vector2d botPos;
   Vector2d lastPos;
 
   CircleDirection direction;
 
-  Drivetrain drivetrain;
+  Drivetrain drive;
 
   /** Creates a new DriveInCircle. */
-  public DriveInCircle(Drivetrain _drivetrain, double _speed, double _startingAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
+  public StrafeInCircle(Drivetrain _drive, double _speed, double _approachAngle, double _degreesToDrive, double _radius, CircleDirection _direction) {
+    drive = _drive;
     speed = _speed;
     degreesToDrive = _degreesToDrive;
     radius = _radius;
     direction = _direction;
-    startingAngle = _startingAngle;
+    approachAngle = _approachAngle;
     degreesDriven = 0;
 
-    addRequirements(_drivetrain);
+    addRequirements(_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() 
   {
-    botPos = new Vector2d(Math.cos(startingAngle * MathConstants.DEG_TO_RAD) * radius, Math.sin(startingAngle * MathConstants.DEG_TO_RAD) * radius);
+    botPos = new Vector2d(Math.cos(approachAngle * MathConstants.DEG_TO_RAD) * radius, Math.sin(approachAngle * MathConstants.DEG_TO_RAD) * radius);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -58,7 +59,7 @@ public class DriveInCircle extends CommandBase {
       Vector2d movementVector;
 
       lastPos = botPos;
-      botPos = new Vector2d(botPos.x + drivetrain.getDrivetrainPositionDelta().x, botPos.y + drivetrain.getDrivetrainPositionDelta().y);
+      botPos = new Vector2d(botPos.x + drive.getDrivetrainPositionDelta().x, botPos.y + drive.getDrivetrainPositionDelta().y);
       degreesDriven += Math.toDegrees(Math.atan2(botPos.y, botPos.x) - Math.atan2(lastPos.y, lastPos.x));
       movementVector = botPos;
 
@@ -71,7 +72,7 @@ public class DriveInCircle extends CommandBase {
           break;
       }
 
-      drivetrain.setWithVector(movementVector);
+      drive.setWithVector(movementVector);
     } 
     else 
     {

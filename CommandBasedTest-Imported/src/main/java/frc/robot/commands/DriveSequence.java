@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DriveInCircle.CircleDirection;
+import frc.robot.commands.StrafeInCircle.CircleDirection;
 import frc.robot.subsystems.Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -21,12 +21,8 @@ public class DriveSequence extends SequentialCommandGroup {
   public DriveSequence(Drivetrain drive, double speed) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new DriveAndTurn(drive, speed, 0, 180, 3, drive.getGyroAngle()),
+    super(new StrafeInCircle(drive, speed, 0, 360, 5, CircleDirection.CounterClock),
 
-    new DriveInCircle(drive, speed, 0, 3, 5, CircleDirection.CounterClock),
-
-    new DriveInCircle(drive, speed, 180, 360, 5, CircleDirection.Clock),
-
-    new DriveAndTurn(drive, speed, 180, 0, 3, drive.getGyroAngle()));
+    new StrafeInCircle(drive, speed, 180, 360, 5, CircleDirection.Clock));
   }
 }

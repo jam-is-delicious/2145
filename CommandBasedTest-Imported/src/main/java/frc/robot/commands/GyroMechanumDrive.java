@@ -20,13 +20,11 @@ public class GyroMechanumDrive extends CommandBase {
 
   double kDrive, kStrafe, kTurn;
   double gyroYaw;
-  double speed;
 
-  public GyroMechanumDrive(Drivetrain drive, OI oi, double k_speed) {
-    addRequirements(drive, oi);
+  public GyroMechanumDrive(Drivetrain drive, OI oi) {
+    addRequirements(drive);
+
     m_drive = drive;
-    m_oi = oi;
-    speed = k_speed;
   }
 
   // Called when the command is initially scheduled.
@@ -37,11 +35,12 @@ public class GyroMechanumDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    gyroYaw = m_drive.getGyroAngle();
+
     kDrive = -m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y);
     kStrafe = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_X);
     kTurn = m_oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X);
-
-    gyroYaw = m_drive.getGyroAngle();
 
     // this takes the gyro values and uses them to manipulate the controller input so the robot stays field-centric
     /*double temp = kDrive * Math.cos(gyroYaw) + kStrafe * Math.sin(gyroYaw);
@@ -49,10 +48,10 @@ public class GyroMechanumDrive extends CommandBase {
     kDrive = temp;*/
 
     // assigns each wheel the values it needs to drive, turn, and strafe correctly
-    double fr = kDrive - kTurn + kStrafe;
-    double fl = kDrive + kTurn - kStrafe;
-    double rr = kDrive - kTurn - kStrafe;
-    double rl = kDrive + kTurn + kStrafe;
+    double fr = kDrive - kTurn - kStrafe;
+    double fl = kDrive + kTurn + kStrafe;
+    double rr = kDrive - kTurn + kStrafe;
+    double rl = kDrive + kTurn - kStrafe;
 
     double max = Math.abs(fl);
 
@@ -64,19 +63,14 @@ public class GyroMechanumDrive extends CommandBase {
 
     if(Math.abs(rr) > max) 
         max = Math.abs(rr);
-    
-    System.out.println("FR: " + fr/max);
-    System.out.println("FL: " + fl/max);
-    System.out.println("RR: " + rr/max);
-    System.out.println("RL: " + rl/max);
 
     if(max > 1) 
     {
-      m_drive.setAllCartesian((fr/max)*speed, (fl/max)*speed, (rr/max)*speed, (rl/max)*speed);
+      m_drive.setAllCartesian(fr/max, fl/max, rr/max, rl/max);
     } 
     else 
     {
-      m_drive.setAllCartesian(fr*speed, fl*speed, rr*speed, rl*speed);
+      m_drive.setAllCartesian(fr, fl, rr, rl);
     }
     
   }

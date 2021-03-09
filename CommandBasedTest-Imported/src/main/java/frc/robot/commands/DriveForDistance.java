@@ -10,13 +10,20 @@ import frc.robot.subsystems.Drivetrain;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
+/**
+ * @param drive The drivetrain subsystem
+ * @param speed The speed scalar, in percent, that the motors should spin at
+ * @param angle The angle relative to the field that the bot should move in
+ * @param distance The distance in inches that the bot should travel
+ */
 public class DriveForDistance extends ParallelCommandGroup {
   /** Creates a new DriveForDistance. */
-  public DriveForDistance(Drivetrain drive, double speed, double angle, double distance, double gyroYaw) {
+  public DriveForDistance(Drivetrain drive, double speed, double angle, double distance) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
     drive.resetRelativePosition();
-    addCommands(new DriveForDistancePID(drive, speed, angle, distance, gyroYaw));
+    addCommands(new DriveForDistancePID(drive, speed, angle, distance));
   }
 }
