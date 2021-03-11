@@ -22,7 +22,7 @@ public class RobotContainer {
     drive = new Drivetrain();
     oi = new OI();
 
-    drive.setDefaultCommand(new GyroMechanumDrive(drive, oi));
+    drive.setDefaultCommand(new GyroMecanumDrive(drive, oi));
 
     configureButtonBindings();
   }

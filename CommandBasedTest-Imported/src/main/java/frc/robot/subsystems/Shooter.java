@@ -12,17 +12,21 @@ import frc.robot.Constants.CanBusConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-  CANSparkMax shooterMotor;
+  CANSparkMax flywheelMotor;
   CANSparkMax conveyorMotor;
 
   /** Creates a new Shooter. */
   public Shooter(OI oi) {
-    shooterMotor = new CANSparkMax(CanBusConstants.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushless);
+    flywheelMotor = new CANSparkMax(CanBusConstants.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushless);
     conveyorMotor = new CANSparkMax(CanBusConstants.CONVEYOR_MOTOR_DEVICE_ID, MotorType.kBrushless);
   }
 
   public void Shoot(float speed) {
-    shooterMotor.set(speed);
+    flywheelMotor.set(speed);
+    conveyorMotor.set(speed * ShooterConstants.SHOOTER_TO_CONVEYOR_SPEED);
+  }
+
+  public void Intake(float speed) {
     conveyorMotor.set(speed * ShooterConstants.SHOOTER_TO_CONVEYOR_SPEED);
   }
 }

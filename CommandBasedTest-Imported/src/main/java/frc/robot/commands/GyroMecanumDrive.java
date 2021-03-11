@@ -13,7 +13,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.OI;
 import frc.robot.subsystems.OI.Controller;
 
-public class GyroMechanumDrive extends CommandBase {
+public class GyroMecanumDrive extends CommandBase {
 
   Drivetrain m_drive;
   OI m_oi;
@@ -21,7 +21,7 @@ public class GyroMechanumDrive extends CommandBase {
   double kDrive, kStrafe, kTurn;
   double gyroYaw;
 
-  public GyroMechanumDrive(Drivetrain drive, OI oi) {
+  public GyroMecanumDrive(Drivetrain drive, OI oi) {
     addRequirements(drive);
 
     m_drive = drive;
