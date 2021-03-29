@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,20 +15,27 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax flywheelMotor;
-  CANSparkMax conveyorMotor;
+  TalonSRX conveyorMotor;
+  TalonSRX pickupMotor;
+  TalonSRX intakeMotor;
 
   /** Creates a new Shooter. */
-  public Shooter(OI oi) {
+  public Shooter() {
     flywheelMotor = new CANSparkMax(CanBusConstants.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushless);
-    conveyorMotor = new CANSparkMax(CanBusConstants.CONVEYOR_MOTOR_DEVICE_ID, MotorType.kBrushless);
+    conveyorMotor = new TalonSRX(CanBusConstants.CONVEYOR_MOTOR_DEVICE_ID);
+    pickupMotor = new TalonSRX(CanBusConstants.PICKUP_MOTOR_DEVICE_ID);
+    intakeMotor = new TalonSRX(CanBusConstants.INTAKE_MOTOR_DEVICE_ID);
   }
 
-  public void Shoot(float speed) {
+  public void Shoot(double speed) {
     flywheelMotor.set(speed);
-    conveyorMotor.set(speed * ShooterConstants.SHOOTER_TO_CONVEYOR_SPEED);
+    conveyorMotor.set(ControlMode.PercentOutput, ShooterConstants.CONVEYOR_SPEED);
+    pickupMotor.set(ControlMode.PercentOutput, ShooterConstants.PICKUP_SPEED);
   }
 
-  public void Intake(float speed) {
-    conveyorMotor.set(speed * ShooterConstants.SHOOTER_TO_CONVEYOR_SPEED);
+  public void Intake() {
+    conveyorMotor.set(ControlMode.PercentOutput, ShooterConstants.CONVEYOR_SPEED);
+    intakeMotor.set(ControlMode.PercentOutput, ShooterConstants.INTAKE_SPEED);
+    pickupMotor.set(ControlMode.PercentOutput, -ShooterConstants.PICKUP_SPEED*0.1);
   }
 }

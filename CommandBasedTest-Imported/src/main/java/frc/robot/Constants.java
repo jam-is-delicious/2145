@@ -30,19 +30,36 @@ public final class Constants {
 
     public static final class CanBusConstants {
         public static final int F_RIGHT_DEVICE_ID = 1;
-        public static final int F_LEFT_DEVICE_ID = 2;
-        public static final int R_RIGHT_DEVICE_ID = 3;
+        public static final int F_LEFT_DEVICE_ID = 3;
+        public static final int R_RIGHT_DEVICE_ID = 2;
         public static final int R_LEFT_DEVICE_ID = 4;
 
         public static final int FLYWHEEL_MOTOR_DEVICE_ID = 5;
         public static final int CONVEYOR_MOTOR_DEVICE_ID = 6;
+        public static final int PICKUP_MOTOR_DEVICE_ID = 7;
+        public static final int INTAKE_MOTOR_DEVICE_ID = 8;
 
-        public static final int L_R_ENCODER_DEVICE_ID = 8;
-        public static final int F_B_ENCODER_DEVICE_ID = 9;
+        public static final int L_R_ENCODER_DEVICE_ID = 9;
+        public static final int F_B_ENCODER_DEVICE_ID = 10;
     }
 
     public static final class ShooterConstants {
-        public static final double SHOOTER_TO_CONVEYOR_SPEED = 0.25;
+        public static final double CONVEYOR_SPEED = 0.25;
+        public static final double PICKUP_SPEED = 1.0;
+        public static final double INTAKE_SPEED = 0.1;
+
+        public static final double DISTANCE_TO_SPEED_CONVERSION = 0.01;
+    }
+
+    public static final class CameraConstants {
+        public static final double CAMERA_HEIGHT_IN_INCHES = 22;
+        public static final double CAMERA_ANGLE_IN_DEGREES = 45;
+        public static final double X_OFFSET = 0;
+    }
+
+    public static final class FieldConstants {
+        public static final double GOAL_HEIGHT = 98.25;
+        public static final double DISTANCE_BETWEEN_OUTER_AND_INNER = 29.25;
     }
 
     public static final class MathConstants {
@@ -74,6 +91,7 @@ public final class Constants {
         public static final int L_STICK_Y = 1;
         public static final int L_STICK_X = 0;
         public static final int R_STICK_X = 4;
+        public static final int R_TRIGGER = 6;
     }
 
 }
