@@ -22,9 +22,10 @@ public class GyroMecanumDrive extends CommandBase {
   double gyroYaw;
 
   public GyroMecanumDrive(Drivetrain drive, OI oi) {
-    addRequirements(drive);
+    addRequirements(drive, oi);
 
     m_drive = drive;
+    m_oi = oi;
   }
 
   // Called when the command is initially scheduled.
