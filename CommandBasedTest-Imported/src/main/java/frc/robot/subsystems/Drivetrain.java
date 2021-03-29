@@ -110,8 +110,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public void setWithVector(Vector2d vector) 
     {
-        if(vector.magnitude() > 1)
-            vector = new Vector2d(vector.x / vector.magnitude(), vector.y / vector.magnitude());
+        vector = new Vector2d(vector.x / vector.magnitude(), vector.y / vector.magnitude());
 
         f_right.set(-vector.x + vector.y);
         f_left.set(vector.x + vector.y);
