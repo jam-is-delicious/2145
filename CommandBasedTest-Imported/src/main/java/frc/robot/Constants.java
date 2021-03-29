@@ -91,7 +91,7 @@ public final class Constants {
         public static final int L_STICK_Y = 1;
         public static final int L_STICK_X = 0;
         public static final int R_STICK_X = 4;
-        public static final int R_TRIGGER = 6;
+        public static final int R_TRIGGER = 3;
     }
 
 }

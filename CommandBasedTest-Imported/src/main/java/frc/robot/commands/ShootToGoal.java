@@ -27,13 +27,12 @@ public class ShootToGoal extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    distance = getDistance(cam.getY());
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    distance = (FieldConstants.GOAL_HEIGHT - CameraConstants.CAMERA_HEIGHT_IN_INCHES) / Math.tan(CameraConstants.CAMERA_ANGLE_IN_DEGREES + cam.getY());
     shooter.Shoot((distance + FieldConstants.DISTANCE_BETWEEN_OUTER_AND_INNER) * ShooterConstants.DISTANCE_TO_SPEED_CONVERSION);
   }
 
@@ -47,9 +46,5 @@ public class ShootToGoal extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  public double getDistance(double camY) {
-    return (FieldConstants.GOAL_HEIGHT - CameraConstants.CAMERA_HEIGHT_IN_INCHES) / Math.tan(CameraConstants.CAMERA_ANGLE_IN_DEGREES + camY);
   }
 }
