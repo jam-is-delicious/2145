@@ -48,7 +48,7 @@ public final class Constants {
         public static final double PICKUP_SPEED = 1.0;
         public static final double INTAKE_SPEED = 0.1;
 
-        public static final double DISTANCE_TO_SPEED_CONVERSION = 0.01;
+        public static final double DISTANCE_TO_SPEED_CONVERSION = 0.005977;
     }
 
     public static final class CameraConstants {

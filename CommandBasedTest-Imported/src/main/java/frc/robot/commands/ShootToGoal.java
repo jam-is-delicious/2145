@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.CameraConstants;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.Constants.MathConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Camera;
 import frc.robot.subsystems.Shooter;
@@ -32,7 +33,7 @@ public class ShootToGoal extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    distance = (FieldConstants.GOAL_HEIGHT - CameraConstants.CAMERA_HEIGHT_IN_INCHES) / Math.tan(CameraConstants.CAMERA_ANGLE_IN_DEGREES + cam.getY());
+    distance = (FieldConstants.GOAL_HEIGHT - CameraConstants.CAMERA_HEIGHT_IN_INCHES) / Math.tan((CameraConstants.CAMERA_ANGLE_IN_DEGREES * MathConstants.DEG_TO_RAD) + cam.getY());
     shooter.Shoot((distance + FieldConstants.DISTANCE_BETWEEN_OUTER_AND_INNER) * ShooterConstants.DISTANCE_TO_SPEED_CONVERSION);
   }
 

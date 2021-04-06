@@ -8,7 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -27,15 +27,14 @@ public class RobotContainer {
     shooter = new Shooter();
     cam = new Camera();
 
-    drive.setDefaultCommand(new GyroMecanumDrive(drive, oi));
+    drive.setDefaultCommand(new ArcadeDrive(drive, oi));
 
     configureButtonBindings();
   }
 
   private void configureButtonBindings() 
   {
-    oi.aButton.whenPressed(new InstantCommand());
-    oi.xButton.whenPressed(new AimAndShoot(cam, drive, shooter));
+    oi.xButton.whenPressed(new SequentialCommandGroup(new TurnToCameraCenter(cam, drive), new ShootToGoal(cam, shooter)));
   }
 
   public Command getAutonomousCommand() 
