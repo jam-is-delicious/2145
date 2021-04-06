@@ -8,21 +8,23 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.OI;
+import frc.robot.subsystems.OI.Controller;
 
 public class ArcadeDrive extends CommandBase {
   
   Drivetrain m_drive;
+  OI m_oi;
 
   double x, y;
 
-  public ArcadeDrive(Drivetrain drive, double turnAxis, double driveAxis) {
-    addRequirements(drive);
-    
-    x = turnAxis;
-    y = driveAxis;
+  public ArcadeDrive(Drivetrain drive, OI oi) {
+    addRequirements(drive, oi);
 
     m_drive = drive;
+    m_oi = oi;
   }
 
   // Called when the command is initially scheduled.
@@ -33,6 +35,9 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    x = m_oi.getAxisRaw(Controller.Pilot, OIConstants.R_STICK_X);
+    y = m_oi.getAxisRaw(Controller.Pilot, OIConstants.L_STICK_Y);
+
     double left =  y + x;
     double right = y - x;
 

@@ -93,5 +93,4 @@ public final class Constants {
         public static final int R_STICK_X = 4;
         public static final int R_TRIGGER = 3;
     }
-
 }
